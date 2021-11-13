@@ -5,11 +5,9 @@ import br.com.gvendas.dto.converter.CategoriaDTOConverter;
 import br.com.gvendas.model.Categoria;
 import br.com.gvendas.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +30,14 @@ public class CategoriaController {
     public ResponseEntity<CategoriaDTO> buscarPorId(@PathVariable Long idCategoria) {
         var categoria = categoriaService.buscarPorId(idCategoria);
         return ResponseEntity.ok().body(categoriaDTOConverter.to(categoria.get()));
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<CategoriaDTO> salvar(@RequestBody CategoriaDTO categoriaDTO) {
+        Categoria categoria = categoriaDTOConverter.to(categoriaDTO);
+        categoria = categoriaService.salvar(categoria);
+        return ResponseEntity.ok().body(categoriaDTOConverter.to(categoria));
     }
 
 }
