@@ -29,7 +29,7 @@ public class CategoriaController {
     @GetMapping("/{idCategoria}")
     public ResponseEntity<CategoriaDTO> buscarPorId(@PathVariable Long idCategoria) {
         var categoria = categoriaService.buscarPorId(idCategoria);
-        return ResponseEntity.ok().body(categoriaDTOConverter.to(categoria.get()));
+        return ResponseEntity.ok().body(categoriaDTOConverter.to(categoria));
     }
 
     @PostMapping
@@ -38,6 +38,14 @@ public class CategoriaController {
         Categoria categoria = categoriaDTOConverter.to(categoriaDTO);
         categoria = categoriaService.salvar(categoria);
         return ResponseEntity.ok().body(categoriaDTOConverter.to(categoria));
+    }
+
+    @PutMapping("/{idCategoria}")
+    public ResponseEntity<CategoriaDTO> atualizar(@PathVariable Long idCategoria, @RequestBody CategoriaDTO categoriaDTO) {
+        Categoria categoriaAtual = categoriaService.buscarPorId(idCategoria);
+        categoriaAtual = categoriaDTOConverter.to(categoriaDTO);
+        categoriaAtual = categoriaService.salvar(categoriaAtual);
+        return ResponseEntity.ok().body(categoriaDTOConverter.to(categoriaAtual));
     }
 
 }
