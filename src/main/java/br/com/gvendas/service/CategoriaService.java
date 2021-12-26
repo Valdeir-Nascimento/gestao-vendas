@@ -28,5 +28,9 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
+    public void excluir(Long idCategoria) {
+        categoriaRepository.deleteById(idCategoria);
+    }
+
 
 }

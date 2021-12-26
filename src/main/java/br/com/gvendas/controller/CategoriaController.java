@@ -56,4 +56,10 @@ public class CategoriaController {
         return ResponseEntity.ok().body(categoriaDTOConverter.to(categoriaAtual));
     }
 
+    @DeleteMapping("/{idCategoria}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluir(@PathVariable Long idCategoria) {
+        categoriaService.excluir(idCategoria);
+    }
+
 }
