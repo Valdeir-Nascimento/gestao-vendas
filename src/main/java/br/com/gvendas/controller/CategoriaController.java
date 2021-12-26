@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,14 +35,14 @@ public class CategoriaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CategoriaDTO> salvar(@RequestBody CategoriaDTO categoriaDTO) {
+    public ResponseEntity<CategoriaDTO> salvar(@Valid @RequestBody CategoriaDTO categoriaDTO) {
         Categoria categoria = categoriaDTOConverter.to(categoriaDTO);
         categoria = categoriaService.salvar(categoria);
         return ResponseEntity.ok().body(categoriaDTOConverter.to(categoria));
     }
 
     @PutMapping("/{idCategoria}")
-    public ResponseEntity<CategoriaDTO> atualizar(@PathVariable Long idCategoria, @RequestBody CategoriaDTO categoriaDTO) {
+    public ResponseEntity<CategoriaDTO> atualizar(@PathVariable Long idCategoria, @Valid @RequestBody CategoriaDTO categoriaDTO) {
         Categoria categoriaAtual = categoriaService.buscarPorId(idCategoria);
         categoriaAtual = categoriaDTOConverter.to(categoriaDTO);
         categoriaAtual = categoriaService.salvar(categoriaAtual);
